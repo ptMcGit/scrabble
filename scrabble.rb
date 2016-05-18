@@ -1,6 +1,6 @@
 # Scrabble
 
-m_input =
+m_input = {}
 player_h = {}
 player_num = 1
 total = 0
@@ -11,30 +11,32 @@ until m_input == "quit"
 
 
   m_input = gets.chomp
-  
+
   if m_input.to_i == 1
-    s_input = 
+    s_input =
     until s_input == "quit"
       print "Enter score (or 'quit' to quit): "
       s_input = gets.chomp
-      max = s_input.to_i
+      as_integer = s_input.to_i
       if player_h[player_num]
-        total = player_h[player_num]["total"]
-        player_h[player_num] = {"max"=> max, "total"=> max + total }
+        player_h[player_num]["total"] += as_integer
+        if as_integer > player_h[player_num]["max"]
+          player_h[player_num]["max"] = as_integer
+        end
+        
       else
-        player_h[player_num] = {"max"=> max, "total"=> max }
+        player_h[player_num] = {"max"=> as_integer, "total"=> as_integer }
       end
       print "Max: "
       puts player_h[player_num]["max"]
       print "Total: "
       puts player_h[player_num]["total"]
-    
+
     end
-    next
   end
-  
+
   # switch player
-  
+
   if m_input.to_i == 2
     print "Enter player number: "
     player_num = gets.chomp
@@ -42,9 +44,9 @@ until m_input == "quit"
   end
 
   # save to file
-  
+
   if m_input.to_i == 3
-  
+
     save_file = "score_sheet"
     f = File.open(save_file, "w+")
     player_h.each do | player |
@@ -53,9 +55,8 @@ until m_input == "quit"
         f.puts(specs)
       end
     end
-    puts "Wrote to #{save_file}" 
+    puts "Wrote to #{save_file}"
   end
-  
+
 end
 exit
-
