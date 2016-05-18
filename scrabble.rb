@@ -5,6 +5,90 @@ player_h = {}
 player_num = 1
 total = 0
 
+# initialize scores
+
+scores = {}
+scores = scores.merge Hash[
+  [
+    "a",
+    "e",
+    "i",
+    "o",
+    "u",
+    "l",
+    "n",
+    "s",
+    "t",
+    "r"
+  ].map {|x| [x, 1]}]
+
+scores = scores.merge Hash[
+  [
+    "d",
+    "g",
+  ].map {|x| [x, 2]}]
+
+scores = scores.merge Hash[
+  [
+    "b",
+    "c",
+    "m",
+    "p",
+  ].map {|x| [x, 3]}]
+
+scores = scores.merge Hash[
+  [
+    "f",
+    "h",
+    "v",
+    "y",
+  ].map {|x| [x, 4]}]
+
+scores = scores.merge Hash[
+  [
+    "k",
+  ].map {|x| [x, 5]}]
+
+scores = scores.merge Hash[
+  [
+    "j",
+    "x",
+  ].map {|x| [x, 8]}]
+
+scores = scores.merge Hash[
+  [
+    "q",
+    "z",
+  ].map {|x| [x, 10]}]
+
+
+
+puts scores
+exit
+word = gets.chomp
+# get_word(valid_words,
+
+#          (1 point)-A, E, I, O, U, L, N, S, T, R
+#          (2 points)-D, G
+#          (3 points)-B, C, M, P
+#          (4 points)-F, H, V, W, Y
+#          (5 points)-K
+#          (8 points)- J, X
+#          (10 points)-Q, Z
+
+         
+
+         
+#          def score_letter(letter)
+#            # returns score of letter
+#            score = {}
+#            score
+           
+
+
+         
+
+
 until m_input == "quit"
   puts "(1) enter score (2) select player (3) save output."
   puts "Enter quit to quit."
