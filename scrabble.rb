@@ -29,10 +29,10 @@ end
 
 valid_words = load_words("/usr/share/dict/words")
 
-# initialize scores
+# initialize letter_values
 
-scores = {}
-scores.merge! Hash[
+letter_values = {}
+letter_values.merge! Hash[
   [
     "a",
     "e",
@@ -46,13 +46,13 @@ scores.merge! Hash[
     "r"
   ].map {|x| [x, 1]}]
 
-scores.merge! Hash[
+letter_values.merge! Hash[
   [
     "d",
     "g",
   ].map {|x| [x, 2]}]
 
-scores.merge! Hash[
+letter_values.merge! Hash[
   [
     "b",
     "c",
@@ -60,40 +60,43 @@ scores.merge! Hash[
     "p",
   ].map {|x| [x, 3]}]
 
-scores.merge! Hash[
+letter_values.merge! Hash[
   [
     "f",
     "h",
     "v",
+    "w",
     "y",
   ].map {|x| [x, 4]}]
 
-scores.merge! Hash[
+letter_values.merge! Hash[
   [
     "k",
   ].map {|x| [x, 5]}]
 
-scores.merge! Hash[
+letter_values.merge! Hash[
   [
     "j",
     "x",
   ].map {|x| [x, 8]}]
 
-scores.merge! Hash[
+letter_values.merge! Hash[
   [
     "q",
     "z",
   ].map {|x| [x, 10]}]
 
-binding.pry
-
 def print_scores(hash)
+  scores = ""
   hash.each do | value |
-    puts "Print player scores"
+    scores +=  "Player #{value.first} scores: "
     value.to_a[1].to_a.each do | arr |
-      print "#{arr[0]}: #{arr[1]}"
+      scores += "#{arr[0]}: #{arr[1]} "
     end
+    scores += "\n"
   end
+  #scores += "\n\n"
+  return scores
 end
 
 def print_prompt
@@ -101,110 +104,122 @@ def print_prompt
   print "Enter word: "
 end
 
-def score_word(scores, word)
+def score_word(letter_values, word)
   # calculate score for word and return it
   score = 0
   word = word.split("")
   word.each do |letter|
-    score += scores[letter]
+    score += letter_values[letter].to_i
   end
   return score
 end
 
-# puts score_word(scores, "a")
-# puts score_word(scores, "arp")
-# puts score_word(scores, "qqq")
+system("date")
 
-exit
-# test_hash={
-#   1=>{
-#     :Max=>100,
-#     :Total=>400,
-#   },
-#   2=>{
-#     :Max=>230,
-#     :Total=>320,
-#   },
-# }
+def write_scores(scores)
+  save_file = "scrabble_score_sheet"
+  f = File.open(save_file, "w+")
+  f.puts("Scrabble Scores")
+  f.puts(Time.now)
+  f.puts(scores)
+  f.close
+  puts "Wrote to #{save_file}"
+end
 
-#print_scores test_hash
-#print_prompt
+test_hash={
+  1=>{
+    :Max=>100,
+    :Total=>400,
+  },
+  2=>{
+    :Max=>230,
+    :Total=>320,
+  },
+}
 
-#binding.pry
-#exit
+def start_menu
+  system("clear")
+  puts "ScrabbleScore Main Menu:"
+  print "(1) start game (2) set players (3) quit.\n"
+  return gets.chomp
+end
 
+def game_menu(player, score_sheet)
+  print_scores(score_sheet)
+  if score_sheet.length > 0
+    puts print_scores(score_sheet)
+  end
+  #binding.pry
+  puts "ScrabbleScore Game Menu:"
+  print "(1) new game (2) save output (3) quit\n"
+  print "Player #{player}, what is your word? "
+  user_input = gets.chomp
+end
 
+def set_players
+  system("clear")
+  number = nil
+  while number.to_s.to_i != number
+    print "How many players? "
+    number = gets.chomp.to_i
+    #binding.pry
+  end
+  return number
+end
 
-word = gets.chomp
+player = nil
+reply = 0
 
+until ((reply = start_menu.to_s.to_i) == 1)
+  if reply == 2
+    player = (1..set_players).to_a
+  elsif reply == 3
+    exit
+  end
+end
+
+player || player = [1]
 
 call_exit = false
-
-# print_menu
-
-# print_score
-
+score_sheet = {}
 
 until call_exit
+  system("clear")
+  user_input = game_menu(player[0], score_sheet)
 
-#until exit_program
-
-
-  
-
-
-until m_input == "quit"
-  puts "(1) enter score (2) select player (3) save output."
-  puts "Enter quit to quit."
-
-
-  m_input = gets.chomp
-
-  if m_input.to_i == 1
-    s_input =
-      until s_input == "quit"
-        print "Enter score (or 'quit' to quit): "
-        s_input = gets.chomp
-        as_integer = s_input.to_i
-        if player_h[player_num]
-          player_h[player_num]["total"] += as_integer
-          if as_integer > player_h[player_num]["max"]
-            player_h[player_num]["max"] = as_integer
-          end
-          
-        else
-          player_h[player_num] = {"max"=> as_integer, "total"=> as_integer }
-        end
-        print "Max: "
-        puts player_h[player_num]["max"]
-        print "Total: "
-        puts player_h[player_num]["total"]
-        
-      end
-  end
-
-  # switch player
-  
-  if m_input.to_i == 2
-    print "Enter player number: "
-    player_num = gets.chomp
-    puts "Switched to player #{player_num}"
-  end
-
-  # save to file
-  
-  if m_input.to_i == 3
-
-    save_file = "score_sheet"
-    f = File.open(save_file, "w+")
-    player_h.each do | player |
-      f.print("player ")
-      player.each do | specs |
-        f.puts(specs)
-      end
+  if user_input.to_i.to_s == user_input
+    if user_input == "1"
+      print_scores(score_sheet)
+      score_sheet = {}
+      print "Game ended. Press enter to start a new game"
+      gets
+    elsif user_input == "2"
+      write_scores(print_scores(score_sheet))
+      next
+    elsif user_input == "3"
+      call_exit = true
+      print_scores(score_sheet)
+      next
     end
-    puts "Wrote to #{save_file}"
   end
-  
+
+  if valid_words.include? user_input
+    points = score_word(letter_values, user_input)
+    if score_sheet[player[0]]
+      score_sheet[player[0]][:Total] += points
+      if points > score_sheet[player[0]][:Max]
+        score_sheet[player[0]][:Max] = points
+      end
+    else
+      score_sheet[player[0]]={:Total => points, :Max => points}
+    end
+    player.rotate!
+    next
+  else
+    puts "That word is not valid!"
+    sleep 1
+    next
+  end
 end
+
 exit
