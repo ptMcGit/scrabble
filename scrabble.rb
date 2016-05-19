@@ -6,6 +6,95 @@ player_h = {}
 player_num = 1
 total = 0
 
+def letters_in_string(string, char)
+  string.include? char
+end
+
+def valid_hints chars, words
+  valid_hint = []
+  words.select do |word|
+    include = true
+    chars.each do |char|
+      if not word.include? char
+        include = false
+      end
+    end
+    if include
+      valid_hint.push word
+    end
+  end
+
+  binding.pry
+  return valid_hint
+end
+
+#puts valid_hints ["a", "v", "l"], ["arp", "ave", "vale"] 
+
+def page_string(array_of_words)
+  columns = system("echo $COLUMNS") # probably not portable
+  accumulator = 0
+  array_of_words.each do |a|
+    accumulator += a.length + 1
+    if accumulator == columns
+      print a + "\n"
+      accumulator = 0 - 1 + a.length
+    else
+      print a + " "
+    end
+  end
+end
+
+page_string a
+
+exit
+#text
+
+# until 
+# rotate n times
+# if sliceable
+#   recurse on a
+#       recurse on b
+
+# def rotate_string(word)
+#   while word / 2 > 
+
+# word.each_slice(2).to_a
+
+# def rotate_string(word)
+#   # rotate word
+#   word = word.split("")
+#   ret_string = ""
+#   word.length < 2 return word
+#   1.upto word.length do |x|
+#     puts word.rotate(x).join
+    
+#     ret_string += word.rotate(x).join
+#     ret_string += "\n"
+#   end
+#   ret_string
+# end
+
+
+# def mutate_string(word)
+#   if word.length < 2
+#     return word
+#   else
+#     split_word=
+#     puts rotate_string(word)
+#   end
+# end
+
+
+#  return "something else"
+#end
+
+puts mutate_string("h")
+
+
+puts rotate_string("hey")
+
+exit
+
 # initialize words
 
 def load_words (file)
