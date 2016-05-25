@@ -1,5 +1,4 @@
 # Scrabble
-require "pry"
 
 m_input = {}
 player_h = {}
@@ -28,8 +27,6 @@ def valid_hints chars, words
   return valid_hint
 end
 
-#puts valid_hints ["a", "v", "l"], ["arp", "ave", "vale"] 
-
 def page_string(array_of_words)
   columns = system("echo $COLUMNS") # probably not portable
   accumulator = 0
@@ -43,57 +40,6 @@ def page_string(array_of_words)
     end
   end
 end
-
-#page_string a
-
-#exit
-#text
-
-# until 
-# rotate n times
-# if sliceable
-#   recurse on a
-#       recurse on b
-
-# def rotate_string(word)
-#   while word / 2 > 
-
-# word.each_slice(2).to_a
-
-# def rotate_string(word)
-#   # rotate word
-#   word = word.split("")
-#   ret_string = ""
-#   word.length < 2 return word
-#   1.upto word.length do |x|
-#     puts word.rotate(x).join
-    
-#     ret_string += word.rotate(x).join
-#     ret_string += "\n"
-#   end
-#   ret_string
-# end
-
-
-# def mutate_string(word)
-#   if word.length < 2
-#     return word
-#   else
-#     split_word=
-#     puts rotate_string(word)
-#   end
-# end
-
-
-#  return "something else"
-#end
-
-#puts mutate_string("h")
-
-
-#puts rotate_string("hey")
-
-#exit
 
 # initialize words
 
@@ -140,7 +86,6 @@ def print_scores(hash)
     end
     scores += "\n"
   end
-  #scores += "\n\n"
   return scores
 end
 
@@ -158,8 +103,6 @@ def score_word(letter_values, word)
   end
   return score
 end
-
-system("date")
 
 def write_scores(scores)
   save_file = "scrabble_score_sheet"
@@ -194,7 +137,6 @@ def game_menu(player, score_sheet)
   if score_sheet.length > 0
     puts print_scores(score_sheet)
   end
-  #binding.pry
   puts "ScrabbleScore Game Menu:"
   print "(1) new game (2) save output (3) quit\n"
   print "Player #{player}, what is your word? "
@@ -207,7 +149,6 @@ def set_players
   while number.to_s.to_i != number
     print "How many players? "
     number = gets.chomp.to_i
-    #binding.pry
   end
   return number
 end
