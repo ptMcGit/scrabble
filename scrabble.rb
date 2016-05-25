@@ -44,9 +44,9 @@ def page_string(array_of_words)
   end
 end
 
-page_string a
+#page_string a
 
-exit
+#exit
 #text
 
 # until 
@@ -88,12 +88,12 @@ exit
 #  return "something else"
 #end
 
-puts mutate_string("h")
+#puts mutate_string("h")
 
 
-puts rotate_string("hey")
+#puts rotate_string("hey")
 
-exit
+#exit
 
 # initialize words
 
@@ -121,59 +121,15 @@ valid_words = load_words("/usr/share/dict/words")
 # initialize letter_values
 
 letter_values = {}
-letter_values.merge! Hash[
-  [
-    "a",
-    "e",
-    "i",
-    "o",
-    "u",
-    "l",
-    "n",
-    "s",
-    "t",
-    "r"
-  ].map {|x| [x, 1]}]
-
-letter_values.merge! Hash[
-  [
-    "d",
-    "g",
-  ].map {|x| [x, 2]}]
-
-letter_values.merge! Hash[
-  [
-    "b",
-    "c",
-    "m",
-    "p",
-  ].map {|x| [x, 3]}]
-
-letter_values.merge! Hash[
-  [
-    "f",
-    "h",
-    "v",
-    "w",
-    "y",
-  ].map {|x| [x, 4]}]
-
-letter_values.merge! Hash[
-  [
-    "k",
-  ].map {|x| [x, 5]}]
-
-letter_values.merge! Hash[
-  [
-    "j",
-    "x",
-  ].map {|x| [x, 8]}]
-
-letter_values.merge! Hash[
-  [
-    "q",
-    "z",
-  ].map {|x| [x, 10]}]
+{
+  1 => %w(a e i o u l n s t r),
+  2 => %w(d g),
+  3 => %w(b c m p),
+  4 => %w(f h v w y),
+  5 => %w(k),
+  8 => %w(j x),
+  10 => %w(q z)
+}.map { |key, value| value.each do |x| letter_values[x] = key end }
 
 def print_scores(hash)
   scores = ""
